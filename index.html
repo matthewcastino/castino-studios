@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Design Brief</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f5f4f0;
+    margin: 0;
+    padding: 40px 16px;
+    color: #1a1a1a;
+  }
+  .form-wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e5e3dc;
+    padding: 2.5rem;
+  }
+  .form-title { font-size: 24px; font-weight: 600; margin: 0 0 0.25rem; }
+  .form-sub { font-size: 14px; color: #6b6a64; margin: 0 0 1.75rem; line-height: 1.5; }
+  .field-group { margin-bottom: 1.25rem; }
+  label { display: block; font-size: 13px; font-weight: 600; color: #4a4944; margin-bottom: 6px; letter-spacing: 0.02em; }
+  input, select, textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 9px 12px;
+    font-size: 14px;
+    border: 1px solid #d6d4cc;
+    border-radius: 6px;
+    font-family: inherit;
+    background: #fff;
+    color: #1a1a1a;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #1a1a1a;
+    box-shadow: 0 0 0 1px #1a1a1a;
+  }
+  textarea { resize: vertical; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
+  .radio-group { display: flex; flex-direction: column; gap: 8px; }
+  .radio-group label { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 400; color: #1a1a1a; cursor: pointer; }
+  .radio-group input[type=radio] { width: auto; margin: 0; }
+  .section-divider { border: none; border-top: 1px solid #e5e3dc; margin: 1.5rem 0; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #9a988f; margin: 0 0 1rem; }
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    background: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 1.5rem;
+  }
+  .submit-btn:hover { opacity: 0.85; }
+  .note { font-size: 12px; color: #9a988f; text-align: center; margin-top: 0.75rem; }
+  .hint { font-size: 12px; color: #9a988f; margin-top: 4px; }
+
+  /* Page system */
+  .page { display: none; }
+  .page.active { display: block; }
+  .page-indicator { font-size: 12px; color: #9a988f; text-align: center; margin-bottom: 1.5rem; letter-spacing: 0.04em; }
+  .nav-row { display: flex; gap: 12px; margin-top: 1.5rem; }
+  .nav-row .submit-btn { margin-top: 0; }
+  .btn-secondary {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    background: #ffffff;
+    color: #1a1a1a;
+    border: 1px solid #d6d4cc;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .btn-secondary:hover { background: #f5f4f0; }
+
+  /* Pricing page */
+  .pricing-card { background: #faf9f5; border: 1px solid #e5e3dc; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+  .pricing-row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; font-size: 14px; }
+  .pricing-row + .pricing-row { border-top: 1px solid #ece9e1; }
+  .pricing-label { color: #1a1a1a; }
+  .pricing-value { font-weight: 600; color: #1a1a1a; white-space: nowrap; margin-left: 12px; }
+  .process-list { margin: 0; padding-left: 0; list-style: none; counter-reset: step; }
+  .process-list li { counter-increment: step; padding: 8px 0 8px 32px; position: relative; font-size: 14px; line-height: 1.6; }
+  .process-list li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 8px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #1a1a1a; color: #fff;
+    font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .process-list li + li { border-top: 1px solid #ece9e1; }
+  .small-print { font-size: 13px; color: #6b6a64; line-height: 1.6; margin: 0.5rem 0; }
+  .small-print strong { color: #1a1a1a; }
+
+  /* Signature pad */
+  .sig-wrap { border: 1px solid #d6d4cc; border-radius: 6px; background: #fff; touch-action: none; }
+  #sig-canvas { display: block; width: 100%; height: 160px; cursor: crosshair; }
+  .sig-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+  .sig-clear { font-size: 12px; color: #6b6a64; background: none; border: none; cursor: pointer; text-decoration: underline; padding: 0; width: auto; }
+  .agree-row { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.5; color: #1a1a1a; margin: 1rem 0; }
+  .agree-row input { width: auto; margin-top: 3px; }
+</style>
+</head>
+<body>
+
+<div class="form-wrap">
+  <p class="form-title">Website design brief</p>
+  <p class="form-sub">Tell me about your business and what you're looking for — I'll be in touch within 1–2 business days.</p>
+
+  <p class="page-indicator" id="page-indicator">Page 1 of 2 — Your brief</p>
+
+  <form action="https://formspree.io/f/xgobjraz" method="POST" id="brief-form">
+
+  <div class="page active" id="page-1">
+
+    <p class="section-label">Your details</p>
+
+    <div class="row">
+      <div class="field-group">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+      </div>
+      <div class="field-group">
+        <label for="business">Business name</label>
+        <input type="text" id="business" name="business" placeholder="Smith Plumbing Co.">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+      </div>
+      <div class="field-group">
+        <label for="phone">Phone (optional)</label>
+        <input type="tel" id="phone" name="phone" placeholder="04xx xxx xxx">
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label for="industry">Industry / type of business</label>
+      <select id="industry" name="industry">
+        <option value="">Select one...</option>
+        <option>Trades (plumbing, electrical, building)</option>
+        <option>Health &amp; beauty</option>
+        <option>Food &amp; hospitality</option>
+        <option>Professional services</option>
+        <option>Retail</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <hr class="section-divider">
+    <p class="section-label">Your project</p>
+
+    <div class="field-group">
+      <label for="website_goal">What's the main goal of your website?</label>
+      <select id="website_goal" name="website_goal">
+        <option value="">Select one...</option>
+        <option>Get more enquiries / leads</option>
+        <option>Show my portfolio or past work</option>
+        <option>Sell products online</option>
+        <option>Build trust and credibility</option>
+        <option>Replace an outdated website</option>
+        <option>Something else</option>
+      </select>
+    </div>
+
+    <div class="field-group">
+      <label>Single page or multi-page website?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="site_structure" value="Single page"> Single page (everything on one scrolling page)</label>
+        <label><input type="radio" name="site_structure" value="Multi page"> Multi-page (separate pages for each section)</label>
+        <label><input type="radio" name="site_structure" value="Not sure"> Not sure — happy for you to recommend</label>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label for="pages">Pages you'd like</label>
+      <textarea id="pages" name="pages" rows="3" placeholder="e.g. Home, About, Services, Gallery, Contact"></textarea>
+      <p class="hint">List any pages you have in mind, or leave blank if you're not sure yet.</p>
+    </div>
+
+    <hr class="section-divider">
+    <p class="section-label">Style preferences</p>
+
+    <div class="field-group">
+      <label for="existing_website">Do you have an existing website?</label>
+      <input type="url" id="existing_website" name="existing_website" placeholder="https://yoursite.com.au (leave blank if not)">
+      <p class="hint">If so, share the link — it helps to see what's already there and what you'd like to keep or change.</p>
+    </div>
+
+    <div class="field-group">
+      <label for="style_feel">How would you describe the look and feel you want?</label>
+      <select id="style_feel" name="style_feel">
+        <option value="">Select one...</option>
+        <option>Clean and modern</option>
+        <option>Warm and friendly</option>
+        <option>Bold and eye-catching</option>
+        <option>Professional and corporate</option>
+        <option>Minimal and simple</option>
+        <option>Rustic / handcrafted</option>
+        <option>Not sure — happy for you to suggest</option>
+      </select>
+    </div>
+
+    <div class="field-group">
+      <label for="colours">Existing brand colours or preferences (if any)</label>
+      <input type="text" id="colours" name="colours" placeholder="e.g. navy and white, or no preference">
+    </div>
+
+    <div class="field-group">
+      <label for="inspiration">Websites you like the look of (links or descriptions)</label>
+      <textarea id="inspiration" name="inspiration" rows="3" placeholder="e.g. https://example.com — I like how clean and simple it is"></textarea>
+    </div>
+
+    <hr class="section-divider">
+    <p class="section-label">Anything else</p>
+
+    <div class="field-group">
+      <label for="extra">Other details, requirements, or questions</label>
+      <textarea id="extra" name="extra" rows="4" placeholder="e.g. I need a booking form, I already have a logo, I have a tight deadline..."></textarea>
+    </div>
+
+    <div class="nav-row">
+      <button type="button" class="submit-btn" id="to-page-2">Continue to pricing & agreement →</button>
+    </div>
+
+  </div>
+
+  <div class="page" id="page-2">
+
+    <p class="section-label">Pricing</p>
+    <div class="pricing-card">
+      <div class="pricing-row"><span class="pricing-label">Single page website</span><span class="pricing-value">From $800</span></div>
+      <div class="pricing-row"><span class="pricing-label">Multi-page website</span><span class="pricing-value">From $1,000</span></div>
+      <div class="pricing-row"><span class="pricing-label">Initial mockup</span><span class="pricing-value">Free</span></div>
+      <div class="pricing-row"><span class="pricing-label">Deposit to begin</span><span class="pricing-value">20% of project price</span></div>
+      <div class="pricing-row"><span class="pricing-label">Changes after acceptance</span><span class="pricing-value">$100/h, 1h minimum</span></div>
+      <div class="pricing-row"><span class="pricing-label">Ongoing hosting cost</span><span class="pricing-value">$0*</span></div>
+    </div>
+    <p class="small-print">*Basic hosting infrastructure has no ongoing cost. If your site later needs something more complex (e.g. a database, bookings system, or custom integrations), I'll advise you of any cost before proceeding. The only cost you're responsible for is your domain name, which you manage and own.</p>
+
+    <hr class="section-divider">
+    <p class="section-label">How it works</p>
+    <ol class="process-list">
+      <li>I build a free initial mockup so you can see what your site will look like before committing to anything.</li>
+      <li>If you're happy to proceed, you pay a 20% deposit to begin the build.</li>
+      <li>We iterate together until you're fully happy with the result.</li>
+      <li>Once you accept the final version, you pay the remaining balance.</li>
+      <li>I ship the site live and hand over all code and hosting credentials, so you fully own and can manage everything going forward.</li>
+      <li>Any changes requested after acceptance are billed at $100/hour, with a 1 hour minimum.</li>
+    </ol>
+
+    <hr class="section-divider">
+    <p class="section-label">How it's built & hosted</p>
+    <p class="small-print">Your website is written in standard HTML and the code is stored in an online code repository, so it can be read, exported, or modified by any developer in future — you're never locked in to me. It's hosted on <strong>Vercel</strong>, a reliable hosting platform with no cost for basic sites like yours.</p>
+    <p class="small-print"><strong>Content accuracy:</strong> you are responsible for confirming that all text, prices, and details on the website are accurate before it goes live and after any changes.</p>
+
+    <hr class="section-divider">
+    <p class="section-label">Agreement & signature</p>
+
+    <div class="agree-row">
+      <input type="checkbox" id="agree" name="agree" value="Yes" required>
+      <label for="agree" style="margin:0; font-weight:400; font-size:13px;">I have read and agree to the pricing, process, and terms outlined above.</label>
+    </div>
+
+    <div class="field-group">
+      <label for="sig-name">Type your full name</label>
+      <input type="text" id="sig-name" name="signature_name" placeholder="Jane Smith" required>
+    </div>
+
+    <div class="field-group">
+      <label>Draw your signature</label>
+      <div class="sig-wrap">
+        <canvas id="sig-canvas"></canvas>
+      </div>
+      <div class="sig-actions">
+        <span class="hint">Sign with your mouse or finger</span>
+        <button type="button" class="sig-clear" id="sig-clear">Clear</button>
+      </div>
+      <input type="hidden" id="signature_data" name="signature_image">
+    </div>
+
+    <div class="nav-row">
+      <button type="button" class="btn-secondary" id="to-page-1">← Back</button>
+      <button type="submit" class="submit-btn" id="final-submit">Submit brief & agreement</button>
+    </div>
+    <p class="note">Submissions go straight to your email.</p>
+
+  </div>
+
+  </form>
+</div>
+
+<script>
+  // Page navigation
+  var page1 = document.getElementById('page-1');
+  var page2 = document.getElementById('page-2');
+  var indicator = document.getElementById('page-indicator');
+
+  document.getElementById('to-page-2').addEventListener('click', function () {
+    var requiredFields = page1.querySelectorAll('[required]');
+    for (var i = 0; i < requiredFields.length; i++) {
+      if (!requiredFields[i].value) {
+        requiredFields[i].reportValidity();
+        return;
+      }
+    }
+    page1.classList.remove('active');
+    page2.classList.add('active');
+    indicator.textContent = 'Page 2 of 2 — Pricing & agreement';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  document.getElementById('to-page-1').addEventListener('click', function () {
+    page2.classList.remove('active');
+    page1.classList.add('active');
+    indicator.textContent = 'Page 1 of 2 — Your brief';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Signature pad (plain canvas, no external library)
+  var canvas = document.getElementById('sig-canvas');
+  var ctx = canvas.getContext('2d');
+  var drawing = false;
+  var hasSignature = false;
+
+  function resizeCanvas() {
+    var ratio = window.devicePixelRatio || 1;
+    var rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+    ctx.scale(ratio, ratio);
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function getPos(e) {
+    var rect = canvas.getBoundingClientRect();
+    if (e.touches && e.touches[0]) {
+      return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+    }
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
+
+  function startDraw(e) {
+    drawing = true;
+    hasSignature = true;
+    var pos = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+    e.preventDefault();
+  }
+  function moveDraw(e) {
+    if (!drawing) return;
+    var pos = getPos(e);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    e.preventDefault();
+ }
+  function endDraw() {
+    if (!drawing) return;
+    drawing = false;
+    document.getElementById('signature_data').value = canvas.toDataURL('image/png');
+  }
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', moveDraw);
+  canvas.addEventListener('mouseup', endDraw);
+  canvas.addEventListener('mouseleave', endDraw);
+  canvas.addEventListener('touchstart', startDraw, { passive: false });
+  canvas.addEventListener('touchmove', moveDraw, { passive: false });
+  canvas.addEventListener('touchend', endDraw);
+
+  document.getElementById('sig-clear').addEventListener('click', function () {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hasSignature = false;
+    document.getElementById('signature_data').value = '';
+  });
+
+  document.getElementById('brief-form').addEventListener('submit', function (e) {
+    if (!hasSignature) {
+      e.preventDefault();
+      alert('Please draw your signature before submitting.');
+    }
+  });
+</script>
+
+</body>
+</html>
