@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Start a project — Castino Studio</title>
+<meta name="description" content="Tell me about your business and your project. I'll come back with a fixed price and a timeline — no pressure." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --paper:#F3F1EB;
+    --paper-2:#EDEAE1;
+    --ink:#18171D;
+    --ink-soft:#2A2932;
+    --muted:#6C6A74;
+    --line:#DEDAD0;
+    --indigo:#4A39F5;
+    --indigo-deep:#3326D6;
+    --coral:#FF5A3C;
+    --white:#FCFBF8;
+
+    --display:"Bricolage Grotesque", sans-serif;
+    --body:"Plus Jakarta Sans", sans-serif;
+    --mono:"JetBrains Mono", monospace;
+
+    --maxw:1180px;
+    --r:18px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:clamp(1rem,.96rem + .25vw,1.12rem);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font:inherit;}
+  ::selection{background:var(--indigo);color:#fff;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  .form-wrap{max-width:700px;margin:0 auto;padding:0 24px;}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--indigo);
+    display:inline-flex;align-items:center;gap:.5em;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--indigo);display:inline-block;}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.55em;
+    font-family:var(--body);font-weight:600;font-size:.98rem;
+    padding:.85em 1.5em;border-radius:100px;cursor:pointer;
+    border:1px solid transparent;transition:transform .25s var(--ease),background .25s var(--ease),box-shadow .25s var(--ease),color .25s;
+    line-height:1;appearance:none;-webkit-appearance:none;
+  }
+  .btn-primary{background:var(--ink);color:var(--white);}
+  .btn-primary:hover{background:var(--indigo);transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(74,57,245,.6);}
+  .btn-ghost{border-color:var(--line);color:var(--ink);background:transparent;}
+  .btn-ghost:hover{border-color:var(--ink);transform:translateY(-2px);}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important;}
+  .btn-block{width:100%;}
+
+  /* ---------- nav ---------- */
+  header.nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(10px);background:rgba(243,241,235,.78);border-bottom:1px solid var(--line);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;flex-wrap:wrap;gap:12px;}
+  .brand{font-family:var(--display);font-weight:800;font-size:1.4rem;letter-spacing:-.02em;display:flex;align-items:center;gap:.55em;}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--coral);display:inline-block;}
+
+  /* ---------- intro ---------- */
+  .form-head{padding:56px 0 36px;}
+  .form-head h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(2rem,1.5rem + 2.2vw,3.2rem);
+    line-height:1.05;
+    letter-spacing:-.02em;
+    margin:.5em 0 .4em;
+    max-width:18ch;
+  }
+  .form-head p{color:var(--ink-soft);font-size:1.05rem;max-width:48ch;margin:0;}
+
+  /* ---------- card ---------- */
+  .form-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    padding:clamp(26px,4vw,48px);
+    margin-bottom:90px;
+    box-shadow:0 40px 80px -50px rgba(24,23,29,.3);
+  }
+
+  .page-indicator{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;margin:0 0 2rem;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  .field-group{margin-bottom:1.4rem;}
+  label{display:block;font-size:.88rem;font-weight:600;color:var(--ink-soft);margin-bottom:.5em;letter-spacing:.01em;}
+
+  input,select,textarea{
+    width:100%;
+    box-sizing:border-box;
+    padding:.8em 1em;
+    font-size:.96rem;
+    font-family:var(--body);
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:var(--white);
+    color:var(--ink);
+    transition:border-color .2s var(--ease),box-shadow .2s var(--ease);
+  }
+  input:focus,select:focus,textarea:focus{
+    outline:none;
+    border-color:var(--indigo);
+    box-shadow:0 0 0 3px rgba(74,57,245,.14);
+  }
+  textarea{resize:vertical;}
+
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:560px){ .row{grid-template-columns:1fr;} }
+
+  .radio-group{display:flex;flex-direction:column;gap:10px;}
+  .radio-group label{display:flex;align-items:center;gap:10px;font-size:.95rem;font-weight:400;color:var(--ink);cursor:pointer;margin-bottom:0;}
+  .radio-group input[type=radio]{width:auto;margin:0;accent-color:var(--indigo);}
+
+  .section-divider{border:none;border-top:1px solid var(--line);margin:2rem 0 1.6rem;}
+  .section-label{margin-bottom:1.2rem;}
+
+  .hint{font-size:.82rem;color:var(--muted);margin-top:.4em;}
+
+  .nav-row{display:flex;gap:14px;margin-top:1.8rem;flex-wrap:wrap;}
+  .nav-row .btn{flex:1;min-width:170px;}
+  @media (max-width:560px){ .nav-row{flex-direction:column;} .nav-row .btn{width:100%;} }
+
+  /* ---------- pricing ---------- */
+  .pricing-card{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:1.5rem 1.7rem;margin-bottom:1.2rem;}
+  .pricing-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:.6em 0;font-size:.95rem;}
+  .pricing-row + .pricing-row{border-top:1px solid var(--line);}
+  .pricing-label{color:var(--ink-soft);}
+  .pricing-value{font-family:var(--mono);font-weight:600;color:var(--ink);white-space:nowrap;}
+
+  .process-list{margin:0;padding-left:0;list-style:none;counter-reset:step;}
+  .process-list li{counter-increment:step;padding:14px 0 14px 38px;position:relative;font-size:.95rem;line-height:1.6;color:var(--ink-soft);}
+  .process-list li::before{
+    content:counter(step);
+    position:absolute;left:0;top:14px;
+    width:22px;height:22px;border-radius:50%;
+    background:var(--indigo);color:#fff;
+    font-family:var(--mono);font-size:.74rem;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .process-list li + li{border-top:1px solid var(--line);}
+
+  .small-print{font-size:.86rem;color:var(--muted);line-height:1.65;margin:.6rem 0;}
+  .small-print strong{color:var(--ink);}
+
+  /* ---------- signature ---------- */
+  .sig-wrap{border:1px solid var(--line);border-radius:12px;background:var(--white);touch-action:none;overflow:hidden;}
+  #sig-canvas{display:block;width:100%;height:160px;cursor:crosshair;}
+  .sig-actions{display:flex;justify-content:space-between;align-items:center;margin-top:.6em;}
+  .sig-clear{font-family:var(--mono);font-size:.74rem;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;}
+  .agree-row{display:flex;align-items:flex-start;gap:10px;font-size:.9rem;line-height:1.55;color:var(--ink-soft);margin:1.5rem 0;}
+  .agree-row input{width:auto;margin-top:3px;accent-color:var(--indigo);}
+
+  .note{font-family:var(--mono);font-size:.74rem;color:var(--muted);text-align:center;margin-top:1rem;}
+
+  /* ---------- footer ---------- */
+  footer.ft{padding:0 0 60px;}
+  .ft-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:30px;}
+  .ft-brand{font-family:var(--display);font-weight:800;font-size:1.2rem;display:flex;align-items:center;gap:.5em;}
+  .ft-brand .dot{width:10px;height:10px;border-radius:50%;background:var(--coral);}
+  .ft-small{font-family:var(--mono);font-size:.74rem;color:var(--muted);}
+
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;scroll-behavior:auto!important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand"><span class="dot"></span>Castino Studio</a>
+    <a class="btn btn-ghost" href="index.html">← Back to site</a>
+  </div>
+</header>
+
+<main>
+  <div class="form-wrap">
+
+    <div class="form-head">
+      <span class="eyebrow">Start a project</span>
+      <h1>Tell me about your business.</h1>
+      <p>Fill in the brief below — I'll come back with honest advice, a fixed price and a timeline within 1–2 business days.</p>
+    </div>
+
+    <div class="form-card">
+
+      <p class="page-indicator" id="page-indicator">Page 1 of 2 — Your brief</p>
+
+      <form action="https://formspree.io/f/xgobjraz" method="POST" id="brief-form">
+
+      <div class="page active" id="page-1">
+
+        <p class="eyebrow section-label">Your details</p>
+
+        <div class="row">
+          <div class="field-group">
+            <label for="name">Full name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+          </div>
+          <div class="field-group">
+            <label for="business">Business name</label>
+            <input type="text" id="business" name="business" placeholder="Smith Plumbing Co.">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+          </div>
+          <div class="field-group">
+            <label for="phone">Phone (optional)</label>
+            <input type="tel" id="phone" name="phone" placeholder="04xx xxx xxx">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="industry">Industry / type of business</label>
+          <select id="industry" name="industry">
+            <option value="">Select one...</option>
+            <option>Trades (plumbing, electrical, building)</option>
+            <option>Health &amp; beauty</option>
+            <option>Food &amp; hospitality</option>
+            <option>Professional services</option>
+            <option>Retail</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <hr class="section-divider">
+        <p class="eyebrow section-label">Your project</p>
+
+        <div class="field-group">
+          <label for="website_goal">What's the main goal of your website?</label>
+          <select id="website_goal" name="website_goal">
+            <option value="">Select one...</option>
+            <option>Get more enquiries / leads</option>
+            <option>Show my portfolio or past work</option>
+            <option>Sell products online</option>
+            <option>Build trust and credibility</option>
+            <option>Replace an outdated website</option>
+            <option>Something else</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>Single page or multi-page website?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="site_structure" value="Single page"> Single page (everything on one scrolling page)</label>
+            <label><input type="radio" name="site_structure" value="Multi page"> Multi-page (separate pages for each section)</label>
+            <label><input type="radio" name="site_structure" value="Not sure"> Not sure — happy for you to recommend</label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="pages">Pages you'd like</label>
+          <textarea id="pages" name="pages" rows="3" placeholder="e.g. Home, About, Services, Gallery, Contact"></textarea>
+          <p class="hint">List any pages you have in mind, or leave blank if you're not sure yet.</p>
+        </div>
+
+        <hr class="section-divider">
+        <p class="eyebrow section-label">Style preferences</p>
+
+        <div class="field-group">
+          <label for="existing_website">Do you have an existing website?</label>
+          <input type="url" id="existing_website" name="existing_website" placeholder="https://yoursite.com.au (leave blank if not)">
+          <p class="hint">If so, share the link — it helps to see what's already there and what you'd like to keep or change.</p>
+        </div>
+
+        <div class="field-group">
+          <label for="style_feel">How would you describe the look and feel you want?</label>
+          <select id="style_feel" name="style_feel">
+            <option value="">Select one...</option>
+            <option>Clean and modern</option>
+            <option>Warm and friendly</option>
+            <option>Bold and eye-catching</option>
+            <option>Professional and corporate</option>
+            <option>Minimal and simple</option>
+            <option>Rustic / handcrafted</option>
+            <option>Not sure — happy for you to suggest</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="colours">Existing brand colours or preferences (if any)</label>
+          <input type="text" id="colours" name="colours" placeholder="e.g. navy and white, or no preference">
+        </div>
+
+        <div class="field-group">
+          <label for="inspiration">Websites you like the look of (links or descriptions)</label>
+          <textarea id="inspiration" name="inspiration" rows="3" placeholder="e.g. https://example.com — I like how clean and simple it is"></textarea>
+        </div>
+
+        <hr class="section-divider">
+        <p class="eyebrow section-label">Anything else</p>
+
+        <div class="field-group">
+          <label for="extra">Other details, requirements, or questions</label>
+          <textarea id="extra" name="extra" rows="4" placeholder="e.g. I need a booking form, I already have a logo, I have a tight deadline..."></textarea>
+        </div>
+
+        <div class="nav-row">
+          <button type="button" class="btn btn-primary btn-block" id="to-page-2">Continue to pricing &amp; agreement →</button>
+        </div>
+
+      </div>
+
+      <div class="page" id="page-2">
+
+        <p class="eyebrow section-label">Pricing</p>
+        <div class="pricing-card">
+          <div class="pricing-row"><span class="pricing-label">Single page website</span><span class="pricing-value">From $800</span></div>
+          <div class="pricing-row"><span class="pricing-label">Multi-page website</span><span class="pricing-value">From $1,000</span></div>
+          <div class="pricing-row"><span class="pricing-label">Initial mockup</span><span class="pricing-value">Free</span></div>
+          <div class="pricing-row"><span class="pricing-label">Deposit to begin</span><span class="pricing-value">20% of project price</span></div>
+          <div class="pricing-row"><span class="pricing-label">Changes after acceptance</span><span class="pricing-value">$100/h, 1h minimum</span></div>
+          <div class="pricing-row"><span class="pricing-label">Ongoing hosting cost</span><span class="pricing-value">$0*</span></div>
+        </div>
+        <p class="small-print">*Basic hosting infrastructure has no ongoing cost. If your site later needs something more complex (e.g. a database, bookings system, or custom integrations), I'll advise you of any cost before proceeding. The only cost you're responsible for is your domain name, which you manage and own.</p>
+
+        <hr class="section-divider">
+        <p class="eyebrow section-label">How it works</p>
+        <ol class="process-list">
+          <li>I build a free initial mockup so you can see what your site will look like before committing to anything.</li>
+          <li>If you're happy to proceed, you pay a 20% deposit to begin the build.</li>
+          <li>We iterate together until you're fully happy with the result.</li>
+          <li>Once you accept the final version, you pay the remaining balance.</li>
+          <li>I ship the site live and hand over all code and hosting credentials, so you fully own and can manage everything going forward.</li>
+          <li>Any changes requested after acceptance are billed at $100/hour, with a 1 hour minimum.</li>
+        </ol>
+
+        <hr class="section-divider">
+        <p class="eyebrow section-label">How it's built &amp; hosted</p>
+        <p class="small-print">Your website is written in standard HTML and the code is stored in an online code repository, so it can be read, exported, or modified by any developer in future — you're never locked in to me. It's hosted on <strong>Vercel</strong>, a reliable hosting platform with no cost for basic sites like yours.</p>
+        <p class="small-print"><strong>Content accuracy:</strong> you are responsible for confirming that all text, prices, and details on the website are accurate before it goes live and after any changes.</p>
+
+        <hr class="section-divider">
+        <p class="eyebrow section-label">Agreement &amp; signature</p>
+
+        <div class="agree-row">
+          <input type="checkbox" id="agree" name="agree" value="Yes" required>
+          <label for="agree" style="margin:0; font-weight:400; font-size:.9rem;">I have read and agree to the pricing, process, and terms outlined above.</label>
+        </div>
+
+        <div class="field-group">
+          <label for="sig-name">Type your full name</label>
+          <input type="text" id="sig-name" name="signature_name" placeholder="Jane Smith" required>
+        </div>
+
+        <div class="field-group">
+          <label>Draw your signature</label>
+          <div class="sig-wrap">
+            <canvas id="sig-canvas"></canvas>
+          </div>
+          <div class="sig-actions">
+            <span class="hint">Sign with your mouse or finger</span>
+            <button type="button" class="sig-clear" id="sig-clear">Clear</button>
+          </div>
+          <input type="hidden" id="signature_data" name="signature_image">
+        </div>
+
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost btn-block" id="to-page-1">← Back</button>
+          <button type="submit" class="btn btn-primary btn-block" id="final-submit">Submit brief &amp; agreement</button>
+        </div>
+        <p class="note">Submissions go straight to your email.</p>
+
+      </div>
+
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer class="ft">
+  <div class="wrap ft-inner">
+    <a href="index.html" class="ft-brand"><span class="dot"></span>Castino Studio</a>
+    <div class="ft-small">© 2026 Castino Studio · Web design from Sydney, Australia</div>
+  </div>
+</footer>
+
+<script>
+  // Page navigation
+  var page1 = document.getElementById('page-1');
+  var page2 = document.getElementById('page-2');
+  var indicator = document.getElementById('page-indicator');
+
+  document.getElementById('to-page-2').addEventListener('click', function () {
+    var requiredFields = page1.querySelectorAll('[required]');
+    for (var i = 0; i < requiredFields.length; i++) {
+      if (!requiredFields[i].value) {
+        requiredFields[i].reportValidity();
+        return;
+      }
+    }
+    page1.classList.remove('active');
+    page2.classList.add('active');
+    indicator.textContent = 'Page 2 of 2 — Pricing & agreement';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  document.getElementById('to-page-1').addEventListener('click', function () {
+    page2.classList.remove('active');
+    page1.classList.add('active');
+    indicator.textContent = 'Page 1 of 2 — Your brief';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Signature pad (plain canvas, no external library)
+  var canvas = document.getElementById('sig-canvas');
+  var ctx = canvas.getContext('2d');
+  var drawing = false;
+  var hasSignature = false;
+
+  function resizeCanvas() {
+    var ratio = window.devicePixelRatio || 1;
+    var rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+    ctx.scale(ratio, ratio);
+    ctx.strokeStyle = '#18171D';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function getPos(e) {
+    var rect = canvas.getBoundingClientRect();
+    if (e.touches && e.touches[0]) {
+      return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+    }
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
+
+  function startDraw(e) {
+    drawing = true;
+    hasSignature = true;
+    var pos = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+    e.preventDefault();
+  }
+  function moveDraw(e) {
+    if (!drawing) return;
+    var pos = getPos(e);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    e.preventDefault();
+ }
+  function endDraw() {
+    if (!drawing) return;
+    drawing = false;
+    document.getElementById('signature_data').value = canvas.toDataURL('image/png');
+  }
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', moveDraw);
+  canvas.addEventListener('mouseup', endDraw);
+  canvas.addEventListener('mouseleave', endDraw);
+  canvas.addEventListener('touchstart', startDraw, { passive: false });
+  canvas.addEventListener('touchmove', moveDraw, { passive: false });
+  canvas.addEventListener('touchend', endDraw);
+
+  document.getElementById('sig-clear').addEventListener('click', function () {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hasSignature = false;
+    document.getElementById('signature_data').value = '';
+  });
+
+  document.getElementById('brief-form').addEventListener('submit', function (e) {
+    if (!hasSignature) {
+      e.preventDefault();
+      alert('Please draw your signature before submitting.');
+    }
+  });
+</script>
+
+</body>
+</html>
