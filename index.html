@@ -179,7 +179,7 @@
   header.nav.scrolled{border-color:var(--line);}
   .nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;}
   .brand{font-family:var(--display);font-weight:800;font-size:1.4rem;letter-spacing:-.02em;display:flex;align-items:center;gap:.55em;}
-  .brand .logo-mark{width:28px;height:28px;display:block;}
+  .brand .logo-mark{width:38px;height:38px;display:block;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links a.lk{font-size:.95rem;color:var(--ink-soft);position:relative;font-weight:500;}
   .nav-links a.lk::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:2px;background:var(--indigo);transition:width .25s var(--ease);}
@@ -416,7 +416,7 @@
   footer.ft{padding:60px 0 50px;}
   .ft-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:34px;}
   .ft-brand{font-family:var(--display);font-weight:800;font-size:1.3rem;display:flex;align-items:center;gap:.5em;}
-  .ft-brand .logo-mark{width:24px;height:24px;display:block;}
+  .ft-brand .logo-mark{width:30px;height:30px;display:block;}
   .ft-links{display:flex;gap:26px;font-size:.92rem;color:var(--ink-soft);}
   .ft-links a:hover{color:var(--indigo);}
   .ft-small{font-family:var(--mono);font-size:.74rem;color:var(--muted);width:100%;text-align:left;}
@@ -498,7 +498,7 @@
 
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a href="#top" class="brand"><img class="logo-mark" src="assets/logo-small.png" width="28" height="28" alt="Castino Studio logo">Castino Studio</a>
+    <a href="#top" class="brand"><img class="logo-mark" src="assets/logo-small.png" width="38" height="38" alt="Castino Studio logo">Castino Studio</a>
     <nav class="nav-links" id="navLinks">
       <a class="lk" href="#services">What you get</a>
       <a class="lk" href="#process">How it works</a>
@@ -568,12 +568,12 @@
                 <p>Single-origin beans, roasted around the corner, poured by people who actually care.</p>
                 <span class="m-pill">See the menu</span>
               </div>
-              <div class="m-hero-img"><img src="assets/coffee-warm.jpg" alt="" width="900" height="675" loading="lazy"></div>
+              <div class="m-hero-img"><picture><source srcset="assets/coffee-warm.webp" type="image/webp"><img src="assets/coffee-warm.jpg" alt="" width="900" height="675" loading="lazy"></picture></div>
             </div>
             <div class="m-grid">
-              <div class="m-card"><img src="assets/coffee-beans.jpg" alt="" width="800" height="533" loading="lazy"><div class="ic">🫘</div><h4>Roasted local</h4><p>Small batches from a roaster two streets over.</p></div>
-              <div class="m-card"><img src="assets/coffee-pastry.jpg" alt="" width="800" height="640" loading="lazy"><div class="ic">🥐</div><h4>Fresh daily</h4><p>Pastries baked each morning before sunrise.</p></div>
-              <div class="m-card"><img src="assets/coffee-location.jpg" alt="" width="800" height="533" loading="lazy"><div class="ic">📍</div><h4>Easy to find</h4><p>Right on the promenade, steps from the sand.</p></div>
+              <div class="m-card"><picture><source srcset="assets/coffee-beans.webp" type="image/webp"><img src="assets/coffee-beans.jpg" alt="" width="800" height="533" loading="lazy"></picture><div class="ic">🫘</div><h4>Roasted local</h4><p>Small batches from a roaster two streets over.</p></div>
+              <div class="m-card"><picture><source srcset="assets/coffee-pastry.webp" type="image/webp"><img src="assets/coffee-pastry.jpg" alt="" width="800" height="640" loading="lazy"></picture><div class="ic">🥐</div><h4>Fresh daily</h4><p>Pastries baked each morning before sunrise.</p></div>
+              <div class="m-card"><picture><source srcset="assets/coffee-location.webp" type="image/webp"><img src="assets/coffee-location.jpg" alt="" width="800" height="533" loading="lazy"></picture><div class="ic">📍</div><h4>Easy to find</h4><p>Right on the promenade, steps from the sand.</p></div>
             </div>
           </div>
           <div class="handle" id="handle" role="separator" aria-label="Drag to resize the preview"><div class="grip"></div></div>
@@ -734,7 +734,7 @@
         <a class="work reveal" href="https://yourlocalcarpetcleaner.com" target="_blank" rel="noopener noreferrer" aria-label="Your Local Carpet Cleaner project">
           <div class="thumb">
             <div class="mini-chrome"><i></i><i></i><i></i></div>
-            <img src="assets/work-carpet.jpg" alt="Your Local Carpet Cleaner website homepage design" width="1280" height="800" loading="lazy">
+            <picture><source srcset="assets/work-carpet.webp" type="image/webp"><img src="assets/work-carpet.jpg" alt="Your Local Carpet Cleaner website homepage design" width="1280" height="800" loading="lazy"></picture>
           </div>
           <div class="work-meta">
             <div><h3>Your Local Carpet Cleaner</h3><p>Local service · Sydney</p></div>
@@ -744,7 +744,7 @@
         <a class="work reveal" href="https://proball.com" target="_blank" rel="noopener noreferrer" aria-label="ProBall project">
           <div class="thumb">
             <div class="mini-chrome"><i></i><i></i><i></i></div>
-            <img src="assets/work-proball.jpg" alt="ProBall youth basketball training website homepage design" width="1280" height="800" loading="lazy">
+            <picture><source srcset="assets/work-proball.webp" type="image/webp"><img src="assets/work-proball.jpg" alt="ProBall youth basketball training website homepage design" width="1280" height="800" loading="lazy"></picture>
           </div>
           <div class="work-meta">
             <div><h3>ProBall</h3><p>Youth basketball training · Sydney</p></div>
@@ -822,7 +822,7 @@
 
 <footer class="ft">
   <div class="wrap ft-inner">
-    <a href="#top" class="ft-brand"><img class="logo-mark" src="assets/logo-small.png" width="24" height="24" alt="Castino Studio logo">Castino Studio</a>
+    <a href="#top" class="ft-brand"><img class="logo-mark" src="assets/logo-small.png" width="30" height="30" alt="Castino Studio logo">Castino Studio</a>
     <nav class="ft-links">
       <a href="#services">What you get</a>
       <a href="#process">How it works</a>
