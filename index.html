@@ -227,7 +227,7 @@
     .m-card{min-height:0;padding:10px 12px;flex-direction:row;align-items:center;gap:10px;}
     .m-card::before{background:linear-gradient(100deg,rgba(15,12,10,.78),rgba(15,12,10,.5));}
     .m-card .ic{margin-bottom:0;flex:none;}
-    .m-card h4{font-size:.8rem;margin:0;line-height:1.2;}
+    .m-card h4{font-size:.8rem;margin:0;line-height:1.2;flex:1;text-align:left;}
     .m-card p{display:none;}
   }
 
@@ -376,6 +376,21 @@
   @media(prefers-reduced-motion:reduce){
     *{transition:none!important;animation:none!important;scroll-behavior:auto!important;}
     .reveal{opacity:1;transform:none;}
+  }
+
+  /* ---------- floating enquiry button ---------- */
+  .fab{
+    position:fixed;right:22px;bottom:22px;z-index:70;
+    box-shadow:0 18px 40px -16px rgba(24,23,29,.55);
+    opacity:0;transform:translateY(14px) scale(.96);pointer-events:none;
+    transition:opacity .3s var(--ease),transform .3s var(--ease),background .25s var(--ease),box-shadow .25s var(--ease);
+  }
+  .fab.show{opacity:1;transform:none;pointer-events:auto;}
+  @media(max-width:520px){
+    .fab{right:16px;bottom:16px;padding:.8em 1.25em;font-size:.92rem;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .fab{transition:opacity .2s linear;}
   }
 </style>
 </head>
@@ -530,7 +545,7 @@
           <div class="ic-chip">🗂️</div>
           <span class="tag-lbl">Most asked for</span>
           <h3>Edit it yourself (CMS)</h3>
-          <p>A CMS, or content management system, is a simple dashboard for your site. Log in, change a price, swap a photo or post today's special, and it's live in seconds. No code, no waiting on me.</p>
+          <p>A CMS lets you update content on your own website yourself, without needing me to make changes.</p>
         </div>
         <div class="addon reveal">
           <div class="ic-chip">📨</div>
@@ -671,6 +686,8 @@
     </div>
   </section>
 
+  <a class="btn btn-primary fab" id="fab" href="form.html">Submit enquiry <span class="arr">↗</span></a>
+
 </main>
 
 <footer class="ft">
@@ -789,6 +806,22 @@
   addEventListener('resize', syncMode);
   addEventListener('load', syncMode);
   syncMode();
+
+  // ---- floating enquiry button: show once past the hero, hide once the contact CTA is on screen ----
+  const fab = document.getElementById('fab');
+  const heroEl = document.querySelector('.hero');
+  const contactEl = document.getElementById('contact');
+  let pastHero = false, atContact = false;
+  function syncFab(){ fab.classList.toggle('show', pastHero && !atContact); }
+  const fabIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.target === heroEl) pastHero = !e.isIntersecting;
+      if(e.target === contactEl) atContact = e.isIntersecting;
+    });
+    syncFab();
+  }, {threshold:0});
+  fabIo.observe(heroEl);
+  fabIo.observe(contactEl);
 </script>
 </body>
 </html>
