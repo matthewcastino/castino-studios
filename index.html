@@ -109,6 +109,20 @@
   @media(max-width:680px){
     .reveal{opacity:1;transform:none;transition:none;}
   }
+  /* scroll-linked reveal: ties opacity/transform directly to scroll position instead of a
+     timed transition, so it stays in sync no matter how fast you scroll. Chromium-only today;
+     unsupported browsers keep the IntersectionObserver + transition version above. */
+  @supports (animation-timeline:view()){
+    @media(min-width:681px){
+      @keyframes reveal-in{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
+      .reveal{
+        transition:none;
+        animation:reveal-in linear both;
+        animation-timeline:view();
+        animation-range:entry 0% cover 35%;
+      }
+    }
+  }
 
   /* ---------- the signature: device slider ---------- */
   .showcase-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin:46px 0 22px;}
