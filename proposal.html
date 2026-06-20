@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Get a Fixed-Price Web Design Quote — Castino Web Design</title>
-<meta name="description" content="Tell me about your business and project. I'll come back with a fixed price from $800 and a timeline — no pressure, no ongoing hosting costs." />
-<link rel="canonical" href="https://castino.info/form.html" />
-<meta name="robots" content="index, follow" />
+<title>Project Proposal — Castino Web Design</title>
+<meta name="description" content="Your project brief, pricing and process — review the details below." />
+<link rel="canonical" href="https://castino.info/proposal.html" />
+<meta name="robots" content="noindex, nofollow" />
 
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
@@ -15,15 +15,15 @@
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Castino Web Design" />
-<meta property="og:title" content="Get a Fixed-Price Web Design Quote — Castino Web Design" />
-<meta property="og:description" content="Tell me about your business and project. I'll come back with a fixed price from $800 and a timeline — no pressure." />
-<meta property="og:url" content="https://castino.info/form.html" />
+<meta property="og:title" content="Project Proposal — Castino Web Design" />
+<meta property="og:description" content="Your project brief, pricing and process — review the details below." />
+<meta property="og:url" content="https://castino.info/proposal.html" />
 <meta property="og:image" content="https://castino.info/assets/og-image.png" />
 <meta property="og:locale" content="en_AU" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Get a Fixed-Price Web Design Quote — Castino Web Design" />
-<meta name="twitter:description" content="Tell me about your business and project. I'll come back with a fixed price from $800 and a timeline." />
+<meta name="twitter:title" content="Project Proposal — Castino Web Design" />
+<meta name="twitter:description" content="Your project brief, pricing and process — review the details below." />
 <meta name="twitter:image" content="https://castino.info/assets/og-image.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -189,13 +189,6 @@
   .small-print{font-size:.86rem;color:var(--muted);line-height:1.65;margin:.6rem 0;}
   .small-print strong{color:var(--ink);}
 
-  /* ---------- signature ---------- */
-  .sig-wrap{border:1px solid var(--line);border-radius:12px;background:var(--white);touch-action:none;overflow:hidden;}
-  #sig-canvas{display:block;width:100%;height:160px;cursor:crosshair;}
-  .sig-actions{display:flex;justify-content:space-between;align-items:center;margin-top:.6em;}
-  .sig-clear{font-family:var(--mono);font-size:.74rem;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;}
-  .agree-row{display:flex;align-items:flex-start;gap:10px;font-size:.9rem;line-height:1.55;color:var(--ink-soft);margin:1.5rem 0;}
-  .agree-row input{width:auto;margin-top:3px;accent-color:var(--indigo);}
 
   .note{font-family:var(--mono);font-size:.74rem;color:var(--muted);text-align:center;margin-top:1rem;}
 
@@ -233,7 +226,8 @@
 
       <p class="page-indicator" id="page-indicator">Page 1 of 2 — Your brief</p>
 
-      <form action="https://formspree.io/f/xgobjraz" method="POST" id="brief-form">
+      <form action="https://formspree.io/f/xgobjraz" method="POST" enctype="multipart/form-data" id="brief-form">
+        <input type="hidden" name="_subject" value="New project brief">
 
       <div class="page active" id="page-1">
 
@@ -334,6 +328,12 @@
         </div>
 
         <div class="field-group">
+          <label for="logo">Upload your logo or brand files (optional)</label>
+          <input type="file" id="logo" name="logo" accept="image/*,.pdf" multiple>
+          <p class="hint">Any logo files, brand guides, or images you'd like me to use or reference.</p>
+        </div>
+
+        <div class="field-group">
           <label for="inspiration">Websites you like the look of (links or descriptions)</label>
           <textarea id="inspiration" name="inspiration" rows="3" placeholder="e.g. https://example.com — I like how clean and simple it is"></textarea>
         </div>
@@ -347,7 +347,7 @@
         </div>
 
         <div class="nav-row">
-          <button type="button" class="btn btn-primary btn-block" id="to-page-2">Continue to pricing &amp; agreement →</button>
+          <button type="button" class="btn btn-primary btn-block" id="to-page-2">Continue to pricing &amp; process →</button>
         </div>
 
       </div>
@@ -381,36 +381,11 @@
         <p class="small-print">Your website is written in standard HTML and the code is stored in an online code repository, so it can be read, exported, or modified by any developer in future — you're never locked in to me. It's hosted on <strong>Vercel</strong>, a reliable hosting platform with no cost for basic sites like yours.</p>
         <p class="small-print"><strong>Content accuracy:</strong> you are responsible for confirming that all text, prices, and details on the website are accurate before it goes live and after any changes.</p>
 
-        <hr class="section-divider">
-        <p class="eyebrow section-label">Agreement &amp; signature</p>
-
-        <div class="agree-row">
-          <input type="checkbox" id="agree" name="agree" value="Yes" required>
-          <label for="agree" style="margin:0; font-weight:400; font-size:.9rem;">I have read and agree to the pricing, process, and terms outlined above.</label>
-        </div>
-
-        <div class="field-group">
-          <label for="sig-name">Type your full name</label>
-          <input type="text" id="sig-name" name="signature_name" placeholder="Jane Smith" required>
-        </div>
-
-        <div class="field-group">
-          <label>Draw your signature</label>
-          <div class="sig-wrap">
-            <canvas id="sig-canvas"></canvas>
-          </div>
-          <div class="sig-actions">
-            <span class="hint">Sign with your mouse or finger</span>
-            <button type="button" class="sig-clear" id="sig-clear">Clear</button>
-          </div>
-          <input type="hidden" id="signature_data" name="signature_image">
-        </div>
-
         <div class="nav-row">
           <button type="button" class="btn btn-ghost btn-block" id="to-page-1">← Back</button>
-          <button type="submit" class="btn btn-primary btn-block" id="final-submit">Submit brief &amp; agreement</button>
+          <button type="submit" class="btn btn-primary btn-block" id="final-submit">Submit brief</button>
         </div>
-        <p class="note">Submissions go straight to your email.</p>
+        <p class="note">This goes straight to my inbox — I'll reply personally.</p>
 
       </div>
 
@@ -442,7 +417,7 @@
     }
     page1.classList.remove('active');
     page2.classList.add('active');
-    indicator.textContent = 'Page 2 of 2 — Pricing & agreement';
+    indicator.textContent = 'Page 2 of 2 — Pricing & process';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
@@ -451,76 +426,6 @@
     page1.classList.add('active');
     indicator.textContent = 'Page 1 of 2 — Your brief';
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // Signature pad (plain canvas, no external library)
-  var canvas = document.getElementById('sig-canvas');
-  var ctx = canvas.getContext('2d');
-  var drawing = false;
-  var hasSignature = false;
-
-  function resizeCanvas() {
-    var ratio = window.devicePixelRatio || 1;
-    var rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * ratio;
-    canvas.height = rect.height * ratio;
-    ctx.scale(ratio, ratio);
-    ctx.strokeStyle = '#18171D';
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  function getPos(e) {
-    var rect = canvas.getBoundingClientRect();
-    if (e.touches && e.touches[0]) {
-      return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
-    }
-    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-  }
-
-  function startDraw(e) {
-    drawing = true;
-    hasSignature = true;
-    var pos = getPos(e);
-    ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
-    e.preventDefault();
-  }
-  function moveDraw(e) {
-    if (!drawing) return;
-    var pos = getPos(e);
-    ctx.lineTo(pos.x, pos.y);
-    ctx.stroke();
-    e.preventDefault();
- }
-  function endDraw() {
-    if (!drawing) return;
-    drawing = false;
-    document.getElementById('signature_data').value = canvas.toDataURL('image/png');
-  }
-
-  canvas.addEventListener('mousedown', startDraw);
-  canvas.addEventListener('mousemove', moveDraw);
-  canvas.addEventListener('mouseup', endDraw);
-  canvas.addEventListener('mouseleave', endDraw);
-  canvas.addEventListener('touchstart', startDraw, { passive: false });
-  canvas.addEventListener('touchmove', moveDraw, { passive: false });
-  canvas.addEventListener('touchend', endDraw);
-
-  document.getElementById('sig-clear').addEventListener('click', function () {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    hasSignature = false;
-    document.getElementById('signature_data').value = '';
-  });
-
-  document.getElementById('brief-form').addEventListener('submit', function (e) {
-    if (!hasSignature) {
-      e.preventDefault();
-      alert('Please draw your signature before submitting.');
-    }
   });
 </script>
 

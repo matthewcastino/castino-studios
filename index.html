@@ -498,6 +498,53 @@
   @media(prefers-reduced-motion:reduce){
     .fab{transition:opacity .2s linear;}
   }
+
+  /* ---------- enquiry modal ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:100;
+    background:rgba(24,23,29,.55);
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+    opacity:0;pointer-events:none;
+    transition:opacity .25s var(--ease);
+  }
+  .modal-overlay.open{opacity:1;pointer-events:auto;}
+  .modal-card{
+    background:var(--white);
+    border-radius:var(--r);
+    padding:clamp(26px,4vw,42px);
+    max-width:480px;width:100%;
+    max-height:88vh;overflow-y:auto;
+    box-shadow:0 40px 80px -30px rgba(24,23,29,.5);
+    transform:translateY(14px) scale(.97);
+    transition:transform .25s var(--ease);
+  }
+  .modal-overlay.open .modal-card{transform:none;}
+  .modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:1.4rem;}
+  .modal-head h2{font-family:var(--display);font-weight:700;font-size:1.5rem;margin:0;letter-spacing:-.01em;}
+  .modal-head p{color:var(--ink-soft);font-size:.92rem;margin:.4em 0 0;}
+  .modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.4rem;line-height:1;padding:4px;}
+  .modal-close:hover{color:var(--ink);}
+
+  .modal-card .field-group{margin-bottom:1.1rem;}
+  .modal-card label{display:block;font-size:.86rem;font-weight:600;color:var(--ink-soft);margin-bottom:.4em;}
+  .modal-card input,.modal-card textarea{
+    width:100%;box-sizing:border-box;padding:.75em 1em;font-size:.95rem;font-family:var(--body);
+    border:1px solid var(--line);border-radius:10px;background:var(--white);color:var(--ink);
+    transition:border-color .2s var(--ease),box-shadow .2s var(--ease);
+  }
+  .modal-card input:focus,.modal-card textarea:focus{
+    outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px rgba(74,57,245,.14);
+  }
+  .modal-card textarea{resize:vertical;}
+  .modal-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:420px){ .modal-row{grid-template-columns:1fr;} }
+  .modal-note{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-align:center;margin-top:.9rem;}
+  .modal-error{font-size:.86rem;color:var(--coral);margin-top:.8rem;display:none;}
+  .modal-error.show{display:block;}
+  .modal-success{text-align:center;padding:1.2rem 0;}
+  .modal-success h2{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:0 0 .5em;}
+  .modal-success p{color:var(--ink-soft);margin:0;}
 </style>
 </head>
 <body>
@@ -510,7 +557,7 @@
       <a class="lk" href="#process">How it works</a>
       <a class="lk" href="#work">Work</a>
       <a class="lk" href="#faq">FAQ</a>
-      <a class="btn btn-primary" href="form.html">Submit enquiry</a>
+      <button type="button" class="btn btn-primary" data-open-enquiry>Submit enquiry</button>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -527,7 +574,7 @@
       <h1 class="reveal">Websites for the people who do the <em>actual work</em>.</h1>
       <p class="lead reveal">I design and build fast, good-looking sites for small businesses, tradies and freelancers across Australia. No bloated templates, no jargon, just a site that earns its place and brings the work in.</p>
       <div class="hero-cta reveal">
-        <a class="btn btn-primary" href="form.html">Submit enquiry <span class="arr">↗</span></a>
+        <button type="button" class="btn btn-primary" data-open-enquiry>Submit enquiry <span class="arr">↗</span></button>
         <a class="btn btn-ghost" href="#work">See recent work</a>
       </div>
       <p class="trust reveal">Fixed-price sites from $800 · No ongoing hosting costs · Most sites live in 2 to 3 weeks</p>
@@ -843,7 +890,7 @@
         <h2>Let's build something worth bookmarking.</h2>
         <p class="sub">Tell me a bit about your business and what you're after. I'll come back with honest advice, a price and a timeline, no pressure.</p>
         <div class="contact-cta">
-          <a class="btn btn-primary" href="form.html">Submit enquiry <span class="arr">↗</span></a>
+          <button type="button" class="btn btn-primary" data-open-enquiry>Submit enquiry <span class="arr">↗</span></button>
           <a class="btn btn-ghost" href="mailto:matthew@castino.info?subject=New%20website%20enquiry">Email me instead</a>
         </div>
         <p class="mailnote">matthew@castino.info · Replies usually within a day</p>
@@ -851,7 +898,61 @@
     </div>
   </section>
 
-  <a class="btn btn-primary fab" id="fab" href="form.html">Submit enquiry <span class="arr">↗</span></a>
+  <button type="button" class="btn btn-primary fab" id="fab" data-open-enquiry>Submit enquiry <span class="arr">↗</span></button>
+
+  <div class="modal-overlay" id="enquiryOverlay">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="enquiryTitle">
+      <div id="enquiryFormView">
+        <div class="modal-head">
+          <div>
+            <h2 id="enquiryTitle">Let's talk about your website.</h2>
+            <p>Leave your details and I'll get back to you within 1–2 business days.</p>
+          </div>
+          <button type="button" class="modal-close" id="enquiryClose" aria-label="Close">&times;</button>
+        </div>
+
+        <form id="enquiryForm" action="https://formspree.io/f/xgobjraz" method="POST">
+          <input type="hidden" name="_subject" value="New enquiry">
+
+          <div class="modal-row">
+            <div class="field-group">
+              <label for="eq-name">Full name</label>
+              <input type="text" id="eq-name" name="name" placeholder="Jane Smith" required>
+            </div>
+            <div class="field-group">
+              <label for="eq-business">Business name (optional)</label>
+              <input type="text" id="eq-business" name="business" placeholder="Smith Plumbing Co.">
+            </div>
+          </div>
+
+          <div class="modal-row">
+            <div class="field-group">
+              <label for="eq-email">Email address</label>
+              <input type="email" id="eq-email" name="email" placeholder="jane@example.com" required>
+            </div>
+            <div class="field-group">
+              <label for="eq-phone">Phone (optional)</label>
+              <input type="tel" id="eq-phone" name="phone" placeholder="04xx xxx xxx">
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="eq-message">What do you need help with? (optional)</label>
+            <textarea id="eq-message" name="message" rows="3" placeholder="e.g. I need a new website for my cafe"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="enquirySubmit" style="width:100%;">Submit enquiry</button>
+          <p class="modal-error" id="enquiryError">Something went wrong — please try again, or email <a href="mailto:matthew@castino.info" style="text-decoration:underline;">matthew@castino.info</a> directly.</p>
+          <p class="modal-note">This goes straight to my inbox — I'll reply personally.</p>
+        </form>
+      </div>
+
+      <div class="modal-success" id="enquirySuccess" style="display:none;">
+        <h2>Thanks — got it.</h2>
+        <p>I'll get back to you within 1–2 business days to chat about your project.</p>
+      </div>
+    </div>
+  </div>
 
 </main>
 
@@ -988,6 +1089,64 @@
   }, {threshold:0});
   fabIo.observe(heroEl);
   fabIo.observe(contactEl);
+
+  // ---- enquiry modal ----
+  const overlay = document.getElementById('enquiryOverlay');
+  const formView = document.getElementById('enquiryFormView');
+  const successView = document.getElementById('enquirySuccess');
+  const enquiryForm = document.getElementById('enquiryForm');
+  const enquiryError = document.getElementById('enquiryError');
+  const enquirySubmit = document.getElementById('enquirySubmit');
+  let lastFocused = null;
+
+  function openModal(){
+    lastFocused = document.activeElement;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    const firstField = document.getElementById('eq-name');
+    if (firstField) firstField.focus();
+  }
+  function closeModal(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  }
+
+  document.querySelectorAll('[data-open-enquiry]').forEach(function (btn) {
+    btn.addEventListener('click', openModal);
+  });
+  document.getElementById('enquiryClose').addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  enquiryForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    enquiryError.classList.remove('show');
+    enquirySubmit.disabled = true;
+    enquirySubmit.textContent = 'Sending…';
+
+    fetch(enquiryForm.action || 'https://formspree.io/f/xgobjraz', {
+      method: 'POST',
+      body: new FormData(enquiryForm),
+      headers: { Accept: 'application/json' }
+    }).then(function (res) {
+      if (res.ok) {
+        formView.style.display = 'none';
+        successView.style.display = 'block';
+      } else {
+        throw new Error('Submission failed');
+      }
+    }).catch(function () {
+      enquiryError.classList.add('show');
+    }).finally(function () {
+      enquirySubmit.disabled = false;
+      enquirySubmit.textContent = 'Submit enquiry';
+    });
+  });
 </script>
 </body>
 </html>

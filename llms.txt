@@ -3,8 +3,7 @@
 Freelance web design studio in Sydney, Australia, building fixed-price websites for small businesses, tradies, freelancers and local services.
 
 ## Key pages
-- [Home](https://castino.info/): Overview of services, pricing, process and recent work.
-- [Get a quote](https://castino.info/form.html): Project enquiry form to request a price and timeline.
+- [Home](https://castino.info/): Overview of services, pricing, process and recent work. Includes an enquiry form to request a price and timeline.
 
 ## About
 Castino Web Design designs and builds fast, mobile-first websites for small businesses, tradies and freelancers across Australia. Websites are fixed-price from $800, with no ongoing hosting costs and no hourly billing — clients get a full price and timeline before work starts. Most projects go live within 2 to 3 weeks. Clients own their site, domain and content outright. Run by Matthew Castino, based in Sydney.
