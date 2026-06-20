@@ -106,6 +106,9 @@
 
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
   .reveal.in{opacity:1;transform:none;}
+  @media(max-width:680px){
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
 
   /* ---------- the signature: device slider ---------- */
   .showcase-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin:46px 0 22px;}
@@ -210,7 +213,7 @@
     .m-card{min-height:0;padding:10px 12px;flex-direction:row;align-items:center;gap:10px;}
     .m-card::before{background:linear-gradient(100deg,rgba(15,12,10,.78),rgba(15,12,10,.5));}
     .m-card .ic{margin-bottom:0;flex:none;}
-    .m-card h4{font-size:.8rem;}
+    .m-card h4{font-size:.8rem;margin:0;line-height:1.2;}
     .m-card p{display:none;}
   }
 
@@ -270,8 +273,6 @@
   .thumb .mini-chrome i{width:7px;height:7px;border-radius:50%;background:#ccc;}
   .thumb img{position:absolute;top:30px;left:0;width:100%;height:calc(100% - 30px);object-fit:cover;object-position:top;display:block;transition:transform .5s var(--ease);}
   .work:hover .thumb img{transform:scale(1.04);}
-  .thumb::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60%;background:linear-gradient(180deg,transparent,rgba(10,10,14,.65));z-index:1;}
-  .thumb .label{position:absolute;left:18px;bottom:16px;z-index:2;color:#fff;font-family:var(--display);font-weight:700;font-size:1.5rem;letter-spacing:-.01em;text-shadow:0 2px 18px rgba(0,0,0,.35);}
   .work-meta{padding:20px 22px;display:flex;justify-content:space-between;align-items:flex-start;gap:14px;}
   .work-meta h3{margin:0 0 4px;font-family:var(--display);font-weight:600;font-size:1.2rem;}
   .work-meta p{margin:0;color:var(--muted);font-size:.88rem;font-family:var(--mono);letter-spacing:.02em;}
@@ -605,7 +606,6 @@
           <div class="thumb">
             <div class="mini-chrome"><i></i><i></i><i></i></div>
             <img src="assets/work-carpet.jpg" alt="Your Local Carpet Cleaner website" loading="lazy">
-            <div class="label">Your Local Carpet Cleaner</div>
           </div>
           <div class="work-meta">
             <div><h3>Your Local Carpet Cleaner</h3><p>Local service · Sydney</p></div>
@@ -616,7 +616,6 @@
           <div class="thumb">
             <div class="mini-chrome"><i></i><i></i><i></i></div>
             <img src="assets/work-proball.jpg" alt="ProBall website" loading="lazy">
-            <div class="label">ProBall</div>
           </div>
           <div class="work-meta">
             <div><h3>ProBall</h3><p>Youth basketball training · Sydney</p></div>
