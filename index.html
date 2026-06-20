@@ -88,8 +88,7 @@
   .nav-toggle span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:.3s;}
 
   /* ---------- hero ---------- */
-  .hero{padding:36px 0 96px;position:relative;perspective:2600px;}
-  .tilt{transform-origin:50% 100%;will-change:transform;}
+  .hero{padding:36px 0 48px;position:relative;}
   .hero h1{
     font-family:var(--display);
     font-weight:700;
@@ -108,7 +107,7 @@
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
   .reveal.in{opacity:1;transform:none;}
 
-  /* ---------- the signature: scroll-tilt showcase + device slider ---------- */
+  /* ---------- the signature: device slider ---------- */
   .showcase-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin:46px 0 22px;}
   .showcase-head p{margin:.5em 0 0;color:var(--ink-soft);max-width:42ch;}
   .showcase-mobile-copy{display:block;}
@@ -216,7 +215,7 @@
   }
 
   /* ---------- generic section ---------- */
-  .sec{padding:96px 0;}
+  .sec{padding:48px 0;}
   .sec-head{display:flex;justify-content:flex-start;align-items:flex-end;gap:56px;flex-wrap:wrap;margin-bottom:54px;}
   .sec-head .head-text{max-width:34ch;}
   .sec-head h2{font-family:var(--display);font-weight:700;font-size:clamp(1.9rem,1.4rem + 2vw,3rem);line-height:1.05;letter-spacing:-.02em;margin:.45em 0 0;}
@@ -266,15 +265,13 @@
   .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;}
   .work{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--white);transition:transform .35s var(--ease),box-shadow .35s var(--ease);display:block;}
   .work:hover{transform:translateY(-6px);box-shadow:0 30px 60px -34px rgba(24,23,29,.5);}
-  .thumb{aspect-ratio:16/10;position:relative;overflow:hidden;}
+  .thumb{aspect-ratio:16/10;position:relative;overflow:hidden;background:#1c1c22;}
   .thumb .mini-chrome{position:absolute;top:0;left:0;right:0;height:30px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);display:flex;align-items:center;gap:5px;padding:0 12px;z-index:2;border-bottom:1px solid rgba(0,0,0,.06);}
   .thumb .mini-chrome i{width:7px;height:7px;border-radius:50%;background:#ccc;}
-  .t1{background:linear-gradient(150deg,#0F766E,#0EA5A5 55%,#5EEAD4);}
-  .t2{background:linear-gradient(150deg,#312E81,#6D28D9 55%,#C4B5FD);}
-  .t3{background:linear-gradient(150deg,#9A3412,#EA580C 55%,#FDBA74);}
-  .t4{background:linear-gradient(150deg,#1E3A8A,#2563EB 55%,#93C5FD);}
+  .thumb img{position:absolute;top:30px;left:0;width:100%;height:calc(100% - 30px);object-fit:cover;object-position:top;display:block;transition:transform .5s var(--ease);}
+  .work:hover .thumb img{transform:scale(1.04);}
+  .thumb::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60%;background:linear-gradient(180deg,transparent,rgba(10,10,14,.65));z-index:1;}
   .thumb .label{position:absolute;left:18px;bottom:16px;z-index:2;color:#fff;font-family:var(--display);font-weight:700;font-size:1.5rem;letter-spacing:-.01em;text-shadow:0 2px 18px rgba(0,0,0,.35);}
-  .thumb .ghost{position:absolute;inset:30px 0 0;display:flex;align-items:center;justify-content:center;font-size:3.6rem;opacity:.22;color:#fff;}
   .work-meta{padding:20px 22px;display:flex;justify-content:space-between;align-items:flex-start;gap:14px;}
   .work-meta h3{margin:0 0 4px;font-family:var(--display);font-weight:600;font-size:1.2rem;}
   .work-meta p{margin:0;color:var(--muted);font-size:.88rem;font-family:var(--mono);letter-spacing:.02em;}
@@ -314,7 +311,7 @@
     .nav-links{position:fixed;inset:72px 0 auto;flex-direction:column;background:var(--paper);padding:24px;gap:20px;border-bottom:1px solid var(--line);transform:translateY(-130%);transition:transform .35s var(--ease);align-items:flex-start;}
     .nav-links.open{transform:none;}
     .nav-toggle{display:block;}
-    .hero{padding:28px 0 24px;}
+    .hero{padding:17px 0 24px;}
     .sec{padding:36px 0;}
     .sec-head{align-items:flex-start;margin-bottom:16px;gap:28px;}
     .sec-head p{text-align:left;max-width:none;}
@@ -357,14 +354,13 @@
     .ft-inner{padding-top:18px;}
   }
   @media(max-width:520px){
-    .hero{padding:24px 0 20px;}
+    .hero{padding:14px 0 20px;}
     .stage{padding:18px;}
   }
 
   @media(prefers-reduced-motion:reduce){
     *{transition:none!important;animation:none!important;scroll-behavior:auto!important;}
     .reveal{opacity:1;transform:none;}
-    .tilt{transform:none!important;}
   }
 </style>
 </head>
@@ -387,9 +383,8 @@
 
 <main id="top">
 
-  <!-- HERO: the whole section tilts upright as you scroll it into view -->
-  <section class="hero" id="heroTilt">
-    <div class="tilt" id="tilt">
+  <!-- HERO -->
+  <section class="hero">
     <div class="wrap">
       <span class="eyebrow reveal">Freelance web design · Sydney</span>
       <h1 class="reveal">Websites for the people who do the <em>actual work</em>.</h1>
@@ -456,7 +451,6 @@
         </div>
         </div>
       </div>
-    </div>
   </section>
 
   <!-- SERVICES -->
@@ -608,9 +602,9 @@
       </div>
       <div class="work-grid">
         <a class="work reveal" href="https://your-local-carpet-cleaner.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Your Local Carpet Cleaner project">
-          <div class="thumb t1">
+          <div class="thumb">
             <div class="mini-chrome"><i></i><i></i><i></i></div>
-            <div class="ghost">🧼</div>
+            <img src="assets/work-carpet.jpg" alt="Your Local Carpet Cleaner website" loading="lazy">
             <div class="label">Your Local Carpet Cleaner</div>
           </div>
           <div class="work-meta">
@@ -619,9 +613,9 @@
           </div>
         </a>
         <a class="work reveal" href="https://proball.com" target="_blank" rel="noopener noreferrer" aria-label="ProBall project">
-          <div class="thumb t4">
+          <div class="thumb">
             <div class="mini-chrome"><i></i><i></i><i></i></div>
-            <div class="ghost">🏀</div>
+            <img src="assets/work-proball.jpg" alt="ProBall website" loading="lazy">
             <div class="label">ProBall</div>
           </div>
           <div class="work-meta">
@@ -705,7 +699,6 @@
   // ---- device slider (desktop only): drag the edge or tap a preset to resize the preview ----
   const browser = document.getElementById('browser');
   const fit = document.getElementById('fit');
-  const tiltEl = document.getElementById('tilt');
   const handle = document.getElementById('handle');
   const sizeTag = document.getElementById('sizeTag');
   const presets = document.getElementById('presets');
@@ -783,32 +776,6 @@
   addEventListener('resize', syncMode);
   addEventListener('load', syncMode);
   syncMode();
-
-  // ---- scroll-tilt: the whole hero (headline, CTA and the demo together) stands upright
-  // as you start scrolling. It sits at the very top of the page, so progress is driven by
-  // scroll distance rather than how far an element has travelled up the viewport.
-  const heroTilt = document.getElementById('heroTilt');
-  if (heroTilt && tiltEl && !reduceMotion.matches) {
-    const small = matchMedia('(max-width:640px)');
-    let ticking = false;
-
-    function tilt(){
-      ticking = false;
-      const travel = innerHeight * .6; // scroll this far to fully settle flat
-      const p = Math.min(1, Math.max(0, scrollY / travel));
-      const maxRotate = small.matches ? 4 : 6;
-      const rotate = maxRotate * (1 - p);
-      const scale = .98 + .02 * p;
-      const ty = 10 * (1 - p);
-      tiltEl.style.transform = `translateY(${ty}px) scale(${scale}) rotateX(${rotate}deg)`;
-    }
-    function requestTilt(){ if(!ticking){ ticking = true; requestAnimationFrame(tilt); } }
-
-    addEventListener('scroll', requestTilt, {passive:true});
-    addEventListener('resize', requestTilt);
-    addEventListener('load', requestTilt);
-    requestTilt();
-  }
 </script>
 </body>
 </html>
