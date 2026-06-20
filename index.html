@@ -88,7 +88,8 @@
   .nav-toggle span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:.3s;}
 
   /* ---------- hero ---------- */
-  .hero{padding:36px 0 40px;position:relative;}
+  .hero{padding:36px 0 96px;position:relative;perspective:2600px;}
+  .tilt{transform-origin:50% 100%;will-change:transform;}
   .hero h1{
     font-family:var(--display);
     font-weight:700;
@@ -107,49 +108,68 @@
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
   .reveal.in{opacity:1;transform:none;}
 
-  /* ---------- the signature: responsive demo ---------- */
-  .demo-section{padding:30px 0 96px;}
-  .demo-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:22px;}
-  .demo-head p{margin:.5em 0 0;color:var(--ink-soft);max-width:42ch;}
-  .presets{display:flex;gap:8px;flex-wrap:wrap;}
+  /* ---------- the signature: scroll-tilt showcase + device slider ---------- */
+  .showcase-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin:46px 0 22px;}
+  .showcase-head p{margin:.5em 0 0;color:var(--ink-soft);max-width:42ch;}
+  .showcase-mobile-copy{display:block;}
+  .showcase-desktop-copy{display:none;}
+  .presets{display:none;gap:8px;flex-wrap:wrap;}
   .preset{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;padding:.6em 1em;border-radius:100px;border:1px solid var(--line);background:var(--white);cursor:pointer;color:var(--ink-soft);transition:.2s var(--ease);}
   .preset:hover{border-color:var(--ink);color:var(--ink);}
   .preset.active{background:var(--ink);color:var(--white);border-color:var(--ink);}
+  @media(min-width:861px){
+    .showcase-mobile-copy{display:none;}
+    .showcase-desktop-copy{display:block;}
+    .presets{display:flex;}
+  }
 
   .stage{
     background:var(--paper-2);
     border:1px solid var(--line);
     border-radius:24px;
-    padding:26px;
-    display:flex;justify-content:center;
+    padding:clamp(22px,4vw,44px);
     position:relative;
     overflow:hidden;
   }
   .stage::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:22px 22px;opacity:.5;}
 
+  /* fit wrapper: gives the scaled browser its visual height so there's no dead space (desktop slider) */
+  .fit{position:relative;width:100%;min-height:140px;}
+
   .browser{
-    width:var(--vw,100%);
-    max-width:100%;
+    position:relative;
+    width:min(100%,880px);
+    margin:0 auto;
     background:var(--white);
     border-radius:14px;
     box-shadow:0 30px 70px -30px rgba(24,23,29,.45),0 4px 14px -6px rgba(24,23,29,.2);
-    position:relative;z-index:2;
-    transition:width .55s var(--ease);
     overflow:hidden;
-    min-width:300px;
+    will-change:transform,width;
   }
-  .browser.dragging{transition:none;}
+  @media(min-width:861px){
+    .browser{
+      position:absolute;top:0;left:50%;
+      width:var(--vw,1100px);
+      transform:translateX(-50%) scale(var(--scale,1));
+      transform-origin:top center;
+      margin:0;
+    }
+  }
   .chrome{display:flex;align-items:center;gap:8px;padding:11px 14px;background:#F0EEE8;border-bottom:1px solid var(--line);}
   .lights{display:flex;gap:6px;}
   .lights i{width:10px;height:10px;border-radius:50%;display:block;}
   .lights i:nth-child(1){background:#FF5F57;} .lights i:nth-child(2){background:#FEBC2E;} .lights i:nth-child(3){background:#28C840;}
   .url{flex:1;background:var(--white);border:1px solid var(--line);border-radius:7px;padding:5px 10px;font-family:var(--mono);font-size:.72rem;color:var(--muted);text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
 
-  /* drag handle */
-  .handle{position:absolute;top:0;bottom:0;right:-13px;width:26px;z-index:5;cursor:ew-resize;display:flex;align-items:center;justify-content:center;touch-action:none;}
+  /* drag handle + size readout: desktop only, the slider is a poor fit for touch */
+  .handle{display:none;position:absolute;top:0;bottom:0;right:-13px;width:26px;z-index:5;cursor:ew-resize;align-items:center;justify-content:center;touch-action:none;}
   .handle .grip{width:6px;height:54px;border-radius:6px;background:var(--ink);box-shadow:0 0 0 4px var(--paper-2);transition:background .2s,transform .2s;}
   .handle:hover .grip,.handle:active .grip{background:var(--indigo);transform:scaleY(1.15);}
-  .size-tag{position:absolute;top:14px;right:14px;z-index:6;font-family:var(--mono);font-size:.7rem;background:var(--ink);color:var(--white);padding:.35em .7em;border-radius:6px;pointer-events:none;}
+  .size-tag{display:none;position:absolute;top:14px;right:14px;z-index:6;font-family:var(--mono);font-size:.7rem;background:var(--ink);color:var(--white);padding:.35em .7em;border-radius:6px;pointer-events:none;}
+  @media(min-width:861px){
+    .handle{display:flex;}
+    .size-tag{display:block;}
+  }
 
   /* ----- mock site inside browser (reflows via container queries) ----- */
   .site{container-type:inline-size;background:#fff;}
@@ -167,16 +187,15 @@
   .m-hero h3{font-family:var(--display);font-weight:700;font-size:clamp(1.4rem,5cqw,2.3rem);line-height:1.05;margin:.4em 0;color:#1f1e26;letter-spacing:-.02em;}
   .m-hero p{font-size:.82rem;color:#6f6e78;margin:0 0 1.1em;max-width:34ch;}
   .m-pill{display:inline-block;background:#FF7A45;color:#fff;font-size:.74rem;font-weight:600;padding:.55em 1.1em;border-radius:100px;}
-  .m-hero-img{flex:1;aspect-ratio:4/3;border-radius:12px;background:
-      radial-gradient(120% 120% at 80% 10%,#FFC9A3 0,transparent 55%),
-      linear-gradient(140deg,#FF8A5B,#FF5A3C 60%,#E83C5b);
-    position:relative;overflow:hidden;}
-  .m-hero-img::after{content:"☕";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2.4rem;filter:saturate(0) brightness(2);opacity:.85;}
+  .m-hero-img{flex:1;aspect-ratio:4/3;border-radius:12px;overflow:hidden;}
+  .m-hero-img img{width:100%;height:100%;object-fit:cover;display:block;}
   .m-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:6px 22px 30px;}
-  .m-card{background:#F6F4EF;border-radius:10px;padding:14px;}
-  .m-card .ic{width:30px;height:30px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:.95rem;margin-bottom:8px;box-shadow:0 2px 8px -3px rgba(0,0,0,.15);}
-  .m-card h4{margin:0 0 4px;font-size:.82rem;color:#26252d;}
-  .m-card p{margin:0;font-size:.7rem;color:#83828c;line-height:1.5;}
+  .m-card{position:relative;border-radius:10px;padding:14px;min-height:118px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;isolation:isolate;}
+  .m-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;}
+  .m-card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,16,14,.1),rgba(15,12,10,.8));z-index:-1;}
+  .m-card .ic{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:.95rem;margin-bottom:8px;box-shadow:0 2px 8px -3px rgba(0,0,0,.3);}
+  .m-card h4{margin:0 0 4px;font-size:.82rem;color:#fff;}
+  .m-card p{margin:0;font-size:.7rem;color:rgba(255,255,255,.82);line-height:1.5;}
 
   @container (max-width:680px){
     .m-grid{grid-template-columns:repeat(2,1fr);}
@@ -184,10 +203,16 @@
   @container (max-width:520px){
     .m-links,.m-cta{display:none;}
     .m-burger{display:flex;}
-    .m-hero{flex-direction:column;align-items:flex-start;padding:24px 18px;}
-    .m-hero-img{width:100%;flex:none;aspect-ratio:16/9;}
-    .m-grid{grid-template-columns:1fr;padding-bottom:24px;}
-    .m-hero p{max-width:none;}
+    .m-hero{flex-direction:column;align-items:flex-start;padding:20px 18px 16px;}
+    .m-hero-img{width:100%;flex:none;aspect-ratio:16/10;}
+    .m-hero p{max-width:none;margin-bottom:.8em;}
+    /* compact stacked cards: 3 full-height cards in one column reads as endless scroll on a real phone */
+    .m-grid{grid-template-columns:1fr;gap:8px;padding:0 18px 18px;}
+    .m-card{min-height:0;padding:10px 12px;flex-direction:row;align-items:center;gap:10px;}
+    .m-card::before{background:linear-gradient(100deg,rgba(15,12,10,.78),rgba(15,12,10,.5));}
+    .m-card .ic{margin-bottom:0;flex:none;}
+    .m-card h4{font-size:.8rem;}
+    .m-card p{display:none;}
   }
 
   /* ---------- generic section ---------- */
@@ -289,22 +314,57 @@
     .nav-links{position:fixed;inset:72px 0 auto;flex-direction:column;background:var(--paper);padding:24px;gap:20px;border-bottom:1px solid var(--line);transform:translateY(-130%);transition:transform .35s var(--ease);align-items:flex-start;}
     .nav-links.open{transform:none;}
     .nav-toggle{display:block;}
-    .svc-grid{grid-template-columns:1fr;}
-    .steps{grid-template-columns:1fr;gap:26px;}
-    .work-grid{grid-template-columns:1fr;}
-    .demo-head{align-items:flex-start;}
-    .sec-head{align-items:flex-start;}
+    .hero{padding:28px 0 24px;}
+    .sec{padding:36px 0;}
+    .sec-head{align-items:flex-start;margin-bottom:16px;gap:28px;}
     .sec-head p{text-align:left;max-width:none;}
+
+    /* compact card components: full desktop padding/type-scale reads as endless scroll on mobile */
+    .svc-grid{grid-template-columns:1fr;}
+    .svc{padding:16px;}
+    .svc h3{font-size:1.1rem;margin:.35em 0 .2em;}
+    .svc p{font-size:.9rem;}
+
+    .addons-grid{gap:8px;}
+    .addon{
+      display:grid;
+      grid-template-columns:32px 1fr;
+      grid-template-rows:auto auto auto;
+      column-gap:12px;row-gap:1px;
+      padding:12px;
+    }
+    .addon .ic-chip{grid-column:1;grid-row:1/4;align-self:start;width:32px;height:32px;font-size:.95rem;margin-bottom:0;border-radius:9px;}
+    .addon .tag-lbl{grid-column:2;grid-row:1;margin-bottom:0;}
+    .addon h3{grid-column:2;grid-row:2;font-size:.95rem;margin:.1em 0;}
+    .addon p{grid-column:2;grid-row:3;font-size:.82rem;line-height:1.35;}
+
+    .process{padding:18px 16px;}
+    .steps{grid-template-columns:1fr;gap:10px;margin-top:16px;}
+    .step{padding-top:8px;}
+    .step .s-no{font-size:1.6rem;}
+    .step h3{font-size:1rem;margin:.3em 0 .2em;}
+    .step p{font-size:.88rem;}
+
+    .work-grid{grid-template-columns:1fr;gap:14px;}
+
+    .price-band{padding:20px;gap:16px;}
+
+    .contact{padding:28px 20px;}
+    .contact p.sub{margin:.6em auto 1.2rem;}
+    .mailnote{margin-top:14px;}
+
+    footer.ft{padding:28px 0 22px;}
+    .ft-inner{padding-top:18px;}
   }
   @media(max-width:520px){
-    .sec{padding:70px 0;}
-    .hero{padding:28px 0 30px;}
-    .handle{display:none;}
+    .hero{padding:24px 0 20px;}
+    .stage{padding:18px;}
   }
 
   @media(prefers-reduced-motion:reduce){
     *{transition:none!important;animation:none!important;scroll-behavior:auto!important;}
     .reveal{opacity:1;transform:none;}
+    .tilt{transform:none!important;}
   }
 </style>
 </head>
@@ -327,8 +387,9 @@
 
 <main id="top">
 
-  <!-- HERO -->
-  <section class="hero">
+  <!-- HERO: the whole section tilts upright as you scroll it into view -->
+  <section class="hero" id="heroTilt">
+    <div class="tilt" id="tilt">
     <div class="wrap">
       <span class="eyebrow reveal">Freelance web design · Sydney</span>
       <h1 class="reveal">Websites for the people who do the <em>actual work</em>.</h1>
@@ -339,15 +400,19 @@
       </div>
       <p class="trust reveal">Built with care from Sydney · Most sites live in 2 to 3 weeks</p>
     </div>
-  </section>
 
-  <!-- SIGNATURE: responsive demo -->
-  <section class="demo-section">
+    <!-- SIGNATURE: device slider -->
     <div class="wrap">
-      <div class="demo-head reveal">
+      <div class="showcase-head reveal">
         <div>
-          <span class="eyebrow">Try it · Drag the edge</span>
-          <p>Every site I build adapts to whatever screen it lands on. Grab the handle on the right, or pick a size, and watch this one rebuild itself.</p>
+          <div class="showcase-mobile-copy">
+            <span class="eyebrow">Websites built for mobile</span>
+            <p>Most visitors will find you on their phone first. Here's the same example, true to size.</p>
+          </div>
+          <div class="showcase-desktop-copy">
+            <span class="eyebrow">Try it · Tap a size</span>
+            <p>Every site I build adapts to whatever screen it lands on. Tap a size below, or drag the edge, and watch this one rebuild itself.</p>
+          </div>
         </div>
         <div class="presets" id="presets">
           <button class="preset" data-w="1100">Desktop</button>
@@ -356,7 +421,8 @@
         </div>
       </div>
 
-      <div class="stage reveal">
+      <div class="stage reveal" id="stage">
+        <div class="fit" id="fit">
         <div class="browser" id="browser">
           <div class="size-tag" id="sizeTag">1100px</div>
           <div class="chrome">
@@ -377,15 +443,17 @@
                 <p>Single-origin beans, roasted around the corner, poured by people who actually care.</p>
                 <span class="m-pill">See the menu</span>
               </div>
-              <div class="m-hero-img"></div>
+              <div class="m-hero-img"><img src="assets/coffee-warm.jpg" alt="" loading="lazy"></div>
             </div>
             <div class="m-grid">
-              <div class="m-card"><div class="ic">🫘</div><h4>Roasted local</h4><p>Small batches from a roaster two streets over.</p></div>
-              <div class="m-card"><div class="ic">🥐</div><h4>Fresh daily</h4><p>Pastries baked each morning before sunrise.</p></div>
-              <div class="m-card"><div class="ic">📍</div><h4>Easy to find</h4><p>Right on the promenade, steps from the sand.</p></div>
+              <div class="m-card"><img src="assets/coffee-beans.jpg" alt="" loading="lazy"><div class="ic">🫘</div><h4>Roasted local</h4><p>Small batches from a roaster two streets over.</p></div>
+              <div class="m-card"><img src="assets/coffee-pastry.jpg" alt="" loading="lazy"><div class="ic">🥐</div><h4>Fresh daily</h4><p>Pastries baked each morning before sunrise.</p></div>
+              <div class="m-card"><img src="assets/coffee-location.jpg" alt="" loading="lazy"><div class="ic">📍</div><h4>Easy to find</h4><p>Right on the promenade, steps from the sand.</p></div>
             </div>
           </div>
           <div class="handle" id="handle" role="separator" aria-label="Drag to resize the preview"><div class="grip"></div></div>
+        </div>
+        </div>
         </div>
       </div>
     </div>
@@ -634,45 +702,66 @@
     io.observe(el);
   });
 
-  // ---- responsive demo ----
+  // ---- device slider (desktop only): drag the edge or tap a preset to resize the preview ----
   const browser = document.getElementById('browser');
-  const stage = browser.parentElement;
+  const fit = document.getElementById('fit');
+  const tiltEl = document.getElementById('tilt');
   const handle = document.getElementById('handle');
   const sizeTag = document.getElementById('sizeTag');
   const presets = document.getElementById('presets');
-  const MIN = 300;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const isDesktop = matchMedia('(min-width:861px)');
+  const MIN = 320, MAX = 1280;
 
-  function maxW(){ return stage.clientWidth - 52; } // minus stage padding
-  function setW(px, animate=true){
-    const max = maxW();
-    px = Math.max(MIN, Math.min(px, max));
-    browser.classList.toggle('dragging', !animate);
-    browser.style.setProperty('--vw', px + 'px');
-    sizeTag.textContent = Math.round(px) + 'px';
-    // mark matching preset
-    presets.querySelectorAll('.preset').forEach(b=>{
-      b.classList.toggle('active', Math.abs(parseInt(b.dataset.w) - px) < 30);
-    });
+  let currentW = 1100;
+  let raf = null;
+
+  function render(){
+    if(!isDesktop.matches) return;
+    currentW = Math.max(MIN, Math.min(currentW, MAX));
+    const avail = fit.clientWidth;
+    const scale = Math.min(1, avail / currentW);
+    browser.style.setProperty('--vw', currentW + 'px');
+    browser.style.setProperty('--scale', scale);
+    fit.style.height = (browser.offsetHeight * scale) + 'px';
+    sizeTag.textContent = Math.round(currentW) + 'px';
+    presets.querySelectorAll('.preset').forEach(b =>
+      b.classList.toggle('active', Math.abs(parseInt(b.dataset.w) - currentW) < 24)
+    );
   }
 
-  // presets
+  function tweenTo(target){
+    cancelAnimationFrame(raf);
+    target = Math.max(MIN, Math.min(target, MAX));
+    if(reduceMotion.matches){ currentW = target; render(); return; }
+    const start = currentW, t0 = performance.now(), dur = 550;
+    const ease = t => 1 - Math.pow(1 - t, 3);
+    (function step(now){
+      const p = Math.min(1, (now - t0) / dur);
+      currentW = start + (target - start) * ease(p);
+      render();
+      if(p < 1) raf = requestAnimationFrame(step);
+    })(performance.now());
+  }
+
   presets.addEventListener('click', e => {
+    if(!isDesktop.matches) return;
     const b = e.target.closest('.preset');
     if(!b) return;
-    setW(parseInt(b.dataset.w), true);
-    pauseDemoLoop();
+    tweenTo(parseInt(b.dataset.w));
   });
 
-  // drag
   let dragging = false;
-  function startDrag(e){ dragging = true; browser.classList.add('dragging'); pauseDemoLoop(); e.preventDefault(); }
+  function startDrag(e){ if(!isDesktop.matches) return; dragging = true; cancelAnimationFrame(raf); e.preventDefault(); }
   function moveDrag(e){
     if(!dragging) return;
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const rect = browser.getBoundingClientRect();
-    setW(clientX - rect.left, false);
+    const scale = Math.min(1, fit.clientWidth / currentW);
+    currentW = (clientX - rect.left) / (scale || 1);
+    render();
   }
-  function endDrag(){ if(dragging){ dragging = false; browser.classList.remove('dragging'); resumeDemoLoop(); } }
+  function endDrag(){ dragging = false; }
 
   handle.addEventListener('mousedown', startDrag);
   handle.addEventListener('touchstart', startDrag, {passive:false});
@@ -681,49 +770,45 @@
   addEventListener('mouseup', endDrag);
   addEventListener('touchend', endDrag);
 
-  // init + a gentle auto-demo nudge on first view
-  function init(){ setW(Math.min(1100, maxW()), false); }
-  init();
-  addEventListener('resize', () => { if(!dragging) setW(parseFloat(browser.style.getPropertyValue('--vw')) || maxW(), false); });
+  function syncMode(){
+    if(isDesktop.matches){
+      render();
+    } else {
+      browser.style.removeProperty('--vw');
+      browser.style.removeProperty('--scale');
+      fit.style.height = '';
+    }
+  }
+  isDesktop.addEventListener('change', syncMode);
+  addEventListener('resize', syncMode);
+  addEventListener('load', syncMode);
+  syncMode();
 
-  // perpetual playful reveal: keep cycling desktop → tablet → phone while in view
-  const demoSizes = [420, 680, 1100];
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  let demoIdx = 2; // starts at desktop, so first tick moves to phone
-  let demoTimer = null;
-  let demoVisible = false;
-  let demoPaused = false;
+  // ---- scroll-tilt: the whole hero (headline, CTA and the demo together) stands upright
+  // as you start scrolling. It sits at the very top of the page, so progress is driven by
+  // scroll distance rather than how far an element has travelled up the viewport.
+  const heroTilt = document.getElementById('heroTilt');
+  if (heroTilt && tiltEl && !reduceMotion.matches) {
+    const small = matchMedia('(max-width:640px)');
+    let ticking = false;
 
-  function demoTick(){
-    demoTimer = null;
-    if(!demoVisible || demoPaused || dragging || reduceMotion.matches) return;
-    demoIdx = (demoIdx + 1) % demoSizes.length;
-    const target = demoIdx === 2 ? Math.min(1100, maxW()) : demoSizes[demoIdx];
-    setW(target, true);
-    demoTimer = setTimeout(demoTick, 1800);
-  }
-  function startDemoLoop(){
-    if(demoTimer || demoPaused || reduceMotion.matches) return;
-    demoTimer = setTimeout(demoTick, 1800);
-  }
-  function pauseDemoLoop(){
-    demoPaused = true;
-    clearTimeout(demoTimer);
-    demoTimer = null;
-  }
-  function resumeDemoLoop(){
-    clearTimeout(demoTimer);
-    demoTimer = setTimeout(()=>{ demoPaused = false; startDemoLoop(); }, 3000);
-  }
+    function tilt(){
+      ticking = false;
+      const travel = innerHeight * .6; // scroll this far to fully settle flat
+      const p = Math.min(1, Math.max(0, scrollY / travel));
+      const maxRotate = small.matches ? 4 : 6;
+      const rotate = maxRotate * (1 - p);
+      const scale = .98 + .02 * p;
+      const ty = 10 * (1 - p);
+      tiltEl.style.transform = `translateY(${ty}px) scale(${scale}) rotateX(${rotate}deg)`;
+    }
+    function requestTilt(){ if(!ticking){ ticking = true; requestAnimationFrame(tilt); } }
 
-  const demoIO = new IntersectionObserver((entries)=>{
-    entries.forEach(en=>{
-      demoVisible = en.isIntersecting;
-      if(demoVisible) startDemoLoop();
-      else { clearTimeout(demoTimer); demoTimer = null; }
-    });
-  },{threshold:.3});
-  demoIO.observe(stage);
+    addEventListener('scroll', requestTilt, {passive:true});
+    addEventListener('resize', requestTilt);
+    addEventListener('load', requestTilt);
+    requestTilt();
+  }
 </script>
 </body>
 </html>
