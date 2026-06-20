@@ -346,6 +346,12 @@
   .svc h3{font-family:var(--display);font-weight:600;font-size:1.45rem;margin:.7em 0 .4em;letter-spacing:-.01em;}
   .svc p{margin:0;color:var(--ink-soft);font-size:1rem;}
 
+  .testimonial p{margin:0;color:var(--ink-soft);font-size:1.08rem;line-height:1.55;}
+  .testimonial footer{display:flex;align-items:center;gap:12px;margin-top:1.4em;}
+  .testimonial .t-avatar{width:38px;height:38px;border-radius:50%;background:var(--indigo);color:#fff;font-family:var(--display);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex:none;}
+  .testimonial .t-name{font-weight:600;color:var(--ink);font-size:.95rem;}
+  .testimonial .t-role{display:block;color:var(--muted);font-size:.84rem;font-weight:400;}
+
   /* who-for marquee-ish chips */
   .audience{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;}
   .chip{border:1px solid var(--line);background:var(--white);border-radius:100px;padding:.7em 1.35em;font-weight:500;font-size:.98rem;transition:.25s var(--ease);}
@@ -503,6 +509,7 @@
       <a class="lk" href="#services">What you get</a>
       <a class="lk" href="#process">How it works</a>
       <a class="lk" href="#work">Work</a>
+      <a class="lk" href="#faq">FAQ</a>
       <a class="btn btn-primary" href="form.html">Submit enquiry</a>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
@@ -751,6 +758,34 @@
             <span class="go">↗</span>
           </div>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="sec" style="padding-top:0;">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="head-text">
+          <span class="eyebrow">What clients say</span>
+          <h2>Don't just take my word for it.</h2>
+        </div>
+      </div>
+      <div class="svc-grid reveal">
+        <div class="svc testimonial">
+          <p>"Matthew was the first person who actually built the exact website I had in my head. I'd tried explaining it before and always ended up with something generic. He really listened to my feedback, was patient through every round of changes, and didn't stop until it was exactly right. I love the end result."</p>
+          <footer>
+            <span class="t-avatar">N</span>
+            <span class="t-name">Nasser<span class="t-role">Your Local Carpet Cleaner</span></span>
+          </footer>
+        </div>
+        <div class="svc testimonial">
+          <p>"Since launching our new website, we've had more traffic and more leads than our old site ever brought in. What's been just as good is the CMS — I can update our blog and content myself whenever I want, no code, no waiting on anyone. It's made keeping the site fresh actually easy."</p>
+          <footer>
+            <span class="t-avatar">B</span>
+            <span class="t-name">Ben<span class="t-role">ProBall</span></span>
+          </footer>
+        </div>
       </div>
     </div>
   </section>
